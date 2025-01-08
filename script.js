@@ -1,6 +1,6 @@
-let xpPlayer = 0;
+let xpPlayer = 50;
 let healthPlayer = 0;
-let coinPlayer = 0;
+let coinPlayer = 100;
 
 const title = document.querySelector('#title');
 const text = document.querySelector('#text');
@@ -20,7 +20,7 @@ const locations = [
     {
         nama: 'TOKO',
         text: 'Selamat datang di Toko. Silahkan pilih belanjaan anda.',
-        'button text': ['Beli Health', 'Beli Senjata', 'Taman Kota'],
+        'button text': ['Beli Health (20 coin)', 'Beli Senjata', 'Taman Kota'],
         'button function': [buyHealth, buyWeapon, tamanKota]
     },
     {
@@ -52,26 +52,40 @@ function update(locations) {
     button3.onclick = locations['button function'][2];
 }
 
-function toko() {
-    update(locations[1]);
-}
-
-function buyHealth() {}
-
-function buyWeapon() {}
-
 function tamanKota() {
     update(locations[0]);
+}
+
+function toko() {
+    update(locations[1]);
 }
 
 function goa() {
     update(locations[2]);
 }
 
+function lawanNaga() {
+    update(locations[3]);
+}
+
+function buyHealth() {
+    if (coinPlayer >= 20) {
+
+        coinPlayer = coinPlayer - 20;
+        healthPlayer += 10;
+
+        coinPlayerText.innerText = coinPlayer;
+        healthPlayerText.innerText = healthPlayer;
+    } else {
+        text.innerText = 'Coin kamu telah habis.'
+    };
+}
+
+function buyWeapon() {}
+
+
+
 function lawanSerangga() {}
 
 function lawanSinga() {}
 
-function lawanNaga() {
-    update(locations[3]);
-}

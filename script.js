@@ -1,0 +1,77 @@
+let xpPlayer = 0;
+let healthPlayer = 0;
+let coinPlayer = 0;
+
+const title = document.querySelector('#title');
+const text = document.querySelector('#text');
+const xpPlayerText = document.querySelector('.xp-player-text');
+const healthPlayerText = document.querySelector('.health-player-text');
+const coinPlayerText = document.querySelector('.coin-player-text');
+const button1 = document.querySelector('#button1');
+const button2 = document.querySelector('#button2');
+const button3 = document.querySelector('#button3');
+const locations = [
+    {
+        nama: 'TAMAN KOTA',
+        text: 'Selamat kembali ke taman kota.',
+        'button text': ['Toko', 'Goa', 'Lawan Naga'],
+        'button function': [toko, goa, lawanNaga]
+    },
+    {
+        nama: 'TOKO',
+        text: 'Selamat datang di Toko. Silahkan pilih belanjaan anda.',
+        'button text': ['Beli Health', 'Beli Senjata', 'Taman Kota'],
+        'button function': [buyHealth, buyWeapon, tamanKota]
+    },
+    {
+        nama: 'GOA',
+        text: 'Selamat datang di GOA. Tempat ini adalah tempat anda berlatih.',
+        'button text': ['Lawan Serangga', 'Lawan Singa', 'Taman Kota'],
+        'button function': [lawanSerangga, lawanSinga, tamanKota]
+    },
+    {
+        nama: 'LEVEL BOS!',
+        text: 'Kamu sedang melawan bos tertinggi: Naga.',
+        'button text': ['Serang', 'Menghindar', 'LARI!!!'],
+        'button function': [lawanSerangga, lawanSinga, tamanKota]
+    }
+]
+
+button1.onclick = toko;
+button2.onclick = goa;
+button3.onclick = lawanNaga;
+
+function update(locations) {
+    title.innerText = locations.nama;
+    text.innerText = locations.text;
+    button1.innerText = locations['button text'][0]; 
+    button2.innerText = locations['button text'][1]; 
+    button3.innerText = locations['button text'][2];
+    button1.onclick = locations['button function'][0];
+    button2.onclick = locations['button function'][1];
+    button3.onclick = locations['button function'][2];
+}
+
+function toko() {
+    update(locations[1]);
+}
+
+function buyHealth() {}
+
+function buyWeapon() {}
+
+function tamanKota() {
+    update(locations[0]);
+}
+
+function goa() {
+    update(locations[2]);
+}
+
+function lawanSerangga() {}
+
+function lawanSinga() {}
+
+function lawanNaga() {
+    update(locations[3]);
+}

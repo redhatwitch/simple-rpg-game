@@ -1,6 +1,7 @@
 let xpPlayer = 50;
 let healthPlayer = 0;
 let coinPlayer = 100;
+let inventory = ['tangan kosong'];
 
 const title = document.querySelector('#title');
 const text = document.querySelector('#text');
@@ -20,7 +21,7 @@ const locations = [
     {
         nama: 'TOKO',
         text: 'Selamat datang di Toko. Silahkan pilih belanjaan anda.',
-        'button text': ['Beli Health (20 coin)', 'Beli Senjata', 'Taman Kota'],
+        'button text': ['Beli Health (20 coin)', 'Beli Senjata (20 coin)', 'Taman Kota'],
         'button function': [buyHealth, buyWeapon, tamanKota]
     },
     {
@@ -34,6 +35,25 @@ const locations = [
         text: 'Kamu sedang melawan bos tertinggi: Naga.',
         'button text': ['Serang', 'Menghindar', 'LARI!!!'],
         'button function': [lawanSerangga, lawanSinga, tamanKota]
+    }
+]
+
+const weapons = [
+    {
+        nama: 'tangan kosong',
+        xp: 0
+    },
+    {
+        nama: 'ketapel',
+        xp: 10
+    },
+    {
+        nama: 'pisau',
+        xp: 20
+    },
+    {
+        nama: 'pedang',
+        xp: 30
     }
 ]
 
@@ -81,7 +101,27 @@ function buyHealth() {
     };
 }
 
-function buyWeapon() {}
+function buyWeapon() {
+    if (coinPlayer >= 20) {
+
+        if (inventory.length !== weapons.length) {
+            coinPlayer = coinPlayer - 20;
+            inventory.push(weapons[inventory.length].nama);
+            
+            xpPlayer += weapons[inventory.length - 1].xp;
+            
+            xpPlayerText.innerText = xpPlayer;
+            coinPlayerText.innerText = coinPlayer;
+            text.innerText = 'Kamu berhasil membeli ' + weapons[inventory.length - 1].nama + '.';
+            text.innerText += '\n \n Senjata kamu sekarang: ' + inventory + '.';
+
+        } else {
+            text.innerText = 'Kamu telah memiliki senjata terkuat.'
+        }
+    } else {
+        text.innerText = 'Coin kamu telah habis.'
+    };
+}
 
 
 

@@ -8,9 +8,19 @@ body {
 }
 
 #header {
+    display: grid;
+    gap: 10px;
+    color: #888;
+}
+
+.stat {
     display: flex;
     justify-content: space-between;
-    color: #888;
+}
+
+.monster {
+    display: none;
+    color: rgb(225, 132, 132);
 }
 
 #container {

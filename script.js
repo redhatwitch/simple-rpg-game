@@ -1,6 +1,9 @@
-let xpPlayer = 50;
-let healthPlayer = 0;
+let xpPlayer = 20;
+let healthPlayer = 400;
 let coinPlayer = 100;
+let xpMonster = 0;
+let healthMonster = 0;
+let lvlMonster = 0;
 let inventory = ['tangan kosong'];
 
 const title = document.querySelector('#title');
@@ -11,6 +14,9 @@ const coinPlayerText = document.querySelector('.coin-player-text');
 const button1 = document.querySelector('#button1');
 const button2 = document.querySelector('#button2');
 const button3 = document.querySelector('#button3');
+const monsterStat = document.querySelector('.monster');
+const xpMonsterText = document.querySelector('.xp-monster-text');
+const healthMonsterText = document.querySelector('.health-monster-text');
 const locations = [
     {
         nama: 'TAMAN KOTA',
@@ -31,10 +37,28 @@ const locations = [
         'button function': [lawanSerangga, lawanSinga, tamanKota]
     },
     {
-        nama: 'LEVEL BOS!',
-        text: 'Kamu sedang melawan bos tertinggi: Naga.',
+        nama: 'Battle',
+        text: 'lawan',
         'button text': ['Serang', 'Menghindar', 'LARI!!!'],
-        'button function': [lawanSerangga, lawanSinga, tamanKota]
+        'button function': [attack, dodge, tamanKota]
+    },
+    {
+        nama: 'WIN',
+        text: 'Kamu menang!',
+        'button text': ['Taman Kota', 'Taman Kota', 'Taman Kota'],
+        'button function': [tamanKota, tamanKota, tamanKota]
+    },
+    {
+        nama: 'WINNER',
+        text: 'Kamu BERHASIL!',
+        'button text': ['Ulangi', 'Ulangi', 'Ulangi'],
+        'button function': [tamanKota, tamanKota, tamanKota]
+    },
+    {
+        nama: 'LOSE',
+        text: 'Kamu Kalah!',
+        'button text': ['Taman Kota', 'Taman Kota', 'Taman Kota'],
+        'button function': [tamanKota, tamanKota, tamanKota]
     }
 ]
 
@@ -57,11 +81,33 @@ const weapons = [
     }
 ]
 
+const monsters = [
+    {
+        nama: 'serangga',
+        lvl: 1,
+        xp: 20,
+        health: 120
+    },
+    {
+        nama: 'singa',
+        lvl: 2,
+        xp: 50,
+        health: 200
+    },
+    {
+        nama: 'naga',
+        lvl: 3,
+        xp: 100,
+        health: 300
+    }
+]
+
 button1.onclick = toko;
 button2.onclick = goa;
 button3.onclick = lawanNaga;
 
 function update(locations) {
+    monsterStat.style.display = "none";
     title.innerText = locations.nama;
     text.innerText = locations.text;
     button1.innerText = locations['button text'][0]; 
@@ -86,6 +132,7 @@ function goa() {
 
 function lawanNaga() {
     update(locations[3]);
+    fight(monsters[2]);
 }
 
 function buyHealth() {
@@ -123,9 +170,74 @@ function buyWeapon() {
     };
 }
 
+function lawanSerangga() {
+    update(locations[3]);
+    fight(monsters[0]);
+}
 
+function lawanSinga() {
+    update(locations[3]);
+    fight(monsters[1]);
+}
 
-function lawanSerangga() {}
+function fight(monsters) {
+    monsterStat.style.display = "flex";
+    xpMonsterText.innerText = monsters.xp;
+    healthMonsterText.innerText = monsters.health;
+    xpMonster = monsters.xp;
+    healthMonster = monsters.health;
+    lvlMonster = monsters.lvl;
+}
 
-function lawanSinga() {}
+function attack() {
+    if (healthPlayer > 0 && healthMonster > 0) {
+        roulete();
+    } else if (healthPlayer > 0 && healthMonster <= 0) {
+        if (lvlMonster < 3) {
+            update(locations[4]);
+            text.innerText = 'Kamu menang!'
 
+            xpPlayer += xpMonster;
+            coinPlayer += lvlMonster * 50;
+
+            xpPlayerText.innerText = xpPlayer;
+            coinPlayerText.innerText = coinPlayer;
+        } else {
+            update(locations[5]);
+        }
+    } else //if (healthPlayer > 0 && healthMonster <= 0)//
+    {
+        update(locations[6])
+    }
+}
+
+function dodge() {
+    text.innerText = 'Kamu menghindar!';
+}
+
+function roulete() {
+    let mat = Math.random();
+    console.log(mat);
+    if (mat <= 0.3) {
+        miss();
+    } else (
+        hit()
+    )
+}
+
+function hit() {
+    console.log('hit');
+    healthMonster = healthMonster - xpPlayer;
+    healthPlayer = healthPlayer - xpMonster/2;
+
+    healthMonsterText.innerText = healthMonster;
+    healthPlayerText.innerText = healthPlayer;
+    text.innerText = 'Kamu menyerang!'
+}
+
+function miss() {
+    console.log('miss');
+    healthPlayer -= xpMonster;
+    healthPlayerText.innerText = healthPlayer;
+    text.innerText = 'Seranganmu meleset!'
+}

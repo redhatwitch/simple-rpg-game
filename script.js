@@ -1,9 +1,10 @@
 let xpPlayer = 20;
-let healthPlayer = 400;
+let healthPlayer = 40;
 let coinPlayer = 100;
 let xpMonster = 0;
 let healthMonster = 0;
 let lvlMonster = 0;
+let namaMonster
 let inventory = ['tangan kosong'];
 
 const title = document.querySelector('#title');
@@ -38,7 +39,7 @@ const locations = [
     },
     {
         nama: 'Battle',
-        text: 'lawan',
+        text: 'Ayo lawan monsternya!',
         'button text': ['Serang', 'Menghindar', 'LARI!!!'],
         'button function': [attack, dodge, tamanKota]
     },
@@ -143,6 +144,7 @@ function buyHealth() {
 
         coinPlayerText.innerText = coinPlayer;
         healthPlayerText.innerText = healthPlayer;
+        text.innerText = 'Kamu berhasil menambahkan health kamu.'
     } else {
         text.innerText = 'Coin kamu telah habis.'
     };
@@ -181,6 +183,7 @@ function lawanSinga() {
 }
 
 function fight(monsters) {
+    namaMonster = monsters.nama;
     monsterStat.style.display = "flex";
     xpMonsterText.innerText = monsters.xp;
     healthMonsterText.innerText = monsters.health;
@@ -195,7 +198,7 @@ function attack() {
     } else if (healthPlayer > 0 && healthMonster <= 0) {
         if (lvlMonster < 3) {
             update(locations[4]);
-            text.innerText = 'Kamu menang!'
+            text.innerText = 'Kamu menang! \n Kamu mengalahkan ' + namaMonster + 'Coin dan health kamu bertambah.'
 
             xpPlayer += xpMonster;
             coinPlayer += lvlMonster * 50;
@@ -204,6 +207,7 @@ function attack() {
             coinPlayerText.innerText = coinPlayer;
         } else {
             update(locations[5]);
+            text.innerText = 'Kamu berhasil mengalahkan Naga. Kamu adalah sang pendekar. \n SELAMAT!'
         }
     } else //if (healthPlayer > 0 && healthMonster <= 0)//
     {
@@ -232,12 +236,12 @@ function hit() {
 
     healthMonsterText.innerText = healthMonster;
     healthPlayerText.innerText = healthPlayer;
-    text.innerText = 'Kamu menyerang!'
+    text.innerText = 'Kamu menyerang ' + namaMonster + ' menggunakan ' + weapons[inventory.length - 1].nama + '.';
 }
 
 function miss() {
     console.log('miss');
     healthPlayer -= xpMonster;
     healthPlayerText.innerText = healthPlayer;
-    text.innerText = 'Seranganmu meleset!'
+    text.innerText = 'Seranganmu meleset! Kamu terkena serangan ' + namaMonster + '.'
 }

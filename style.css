@@ -1,3 +1,57 @@
+/* CSS RESET */
+/*
+  1. Use a more-intuitive box-sizing model.
+*/
+*, *::before, *::after {
+    box-sizing: border-box;
+  }
+  /*
+    2. Remove default margin
+  */
+  * {
+    margin: 0;
+  }
+  /*
+    Typographic tweaks!
+    3. Add accessible line-height
+    4. Improve text rendering
+  */
+  body {
+    line-height: 1.2;
+    -webkit-font-smoothing: antialiased;
+  }
+  /*
+    5. Improve media defaults
+  */
+  img, picture, video, canvas, svg {
+    display: block;
+    max-width: 100%;
+  }
+  /*
+    6. Remove built-in form typography styles
+  */
+  input, button, textarea, select {
+    font: inherit;
+  }
+  /*
+    7. Avoid text overflows
+  */
+  p, h1, h2, h3, h4, h5, h6 {
+    overflow-wrap: break-word;
+  }
+
+  h1, h2, h3 {
+    line-height: 1;
+  }
+  /*
+    8. Create a root stacking context
+  */
+  #root, #__next {
+    isolation: isolate;
+  }
+/* CSS RESET END */
+
+
 body {
     display: grid;
     place-items: center;
@@ -5,12 +59,14 @@ body {
     padding: 0 20px;
     margin: 0;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
+    background-image: url(img/bg.jpg);
+    background-size: cover;
 }
 
 #header {
     display: grid;
     gap: 10px;
-    color: #888;
+    color: #696969;
 }
 
 .stat {
@@ -20,16 +76,19 @@ body {
 
 .monster {
     display: none;
-    color: rgb(225, 132, 132);
+    color: rgb(240, 135, 135);
 }
 
 #container {
     display: grid;
     gap: 30px;
-    max-width: 700px;
-    border: 3px solid black;
+    max-width: min-content;
+    max-height: min-content;
+    border: 3px solid rgba(107, 112, 1, 0.759);
     text-align: center;
     padding: 20px 90px;
+    background: url(img/paper-bg1.jpg);
+    background-size: cover;
 }
 
 #title {
@@ -51,4 +110,23 @@ button {
     width: 100px;
     height: 50px;
     font-size: 1em;
+    font-weight: 500;
+    align-items: center;
+    background-image: radial-gradient(100% 100% at 100% 0, #faf4be 0, #e6df9d 100%);
+    border: 0;
+    border-radius: 6px;
+    box-shadow: rgba(45, 35, 66, .4) 0 2px 4px,rgba(45, 35, 66, .3) 0 7px 13px -3px,rgba(58, 65, 111, .5) 0 -3px 0 inset;
+    box-sizing: border-box;
+    cursor: pointer;
 }
+
+button:hover {
+ box-shadow: rgba(45, 35, 66, .4) 0 4px 8px, rgba(45, 35, 66, .3) 0 7px 13px -3px, #8b7f13 0 -3px 0 inset;
+  transform: translateY(-2px);
+}
+
+button:active {
+  box-shadow: #8b7f13 0 3px 7px inset;
+  transform: translateY(2px);
+}
+
